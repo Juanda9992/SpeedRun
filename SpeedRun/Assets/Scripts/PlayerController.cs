@@ -5,15 +5,14 @@ public class PlayerController : MonoBehaviour
 
     #region PublicStuff
     public float MoveSpeed;
-    public float jumpForce;
     #endregion
 
     #region PrivateStuff
     private Rigidbody2D rb;
     private float xMove; 
     private float step;
-    float minSpeed = -12;
-    float maxSpeed = 15;
+    float minSpeed = -8;
+    float maxSpeed = 8;
     #endregion
 
     void Start()
@@ -45,9 +44,25 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector2.right * MoveSpeed * -1);
         }
 
-        Debug.Log(rb.velocity.x);
     }
 
     #region Methods
+    private void OnTriggerEnter2D(Collider2D other) 
+    {
+        if(other.CompareTag("Pad"))
+        {
+            rb.AddForce(Vector2.up * 15, ForceMode2D.Impulse);
+        }    
+    }
+    private void OnTriggerStay2D(Collider2D other) 
+    {
+        if(other.CompareTag("Dash"))
+        {
+            if(Input.GetMouseButton(0))
+            {
+                rb.velocity = other.transform.up * 1000 * Time.deltaTime;
+            }
+        }    
+    }
     #endregion
 }
