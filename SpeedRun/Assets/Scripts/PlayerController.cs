@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private float step;
     float minSpeed = -8;
     float maxSpeed = 8;
+    [SerializeField] private string levelToLoad;
     #endregion
 
     void Start()
@@ -53,14 +54,18 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(Vector2.up * 15, ForceMode2D.Impulse);
         }    
+        if(other.CompareTag("Respawn"))
+        {
+            SceneLoader.LoadScene(levelToLoad);
+        }
     }
     private void OnTriggerStay2D(Collider2D other) 
     {
         if(other.CompareTag("Dash"))
         {
-            if(Input.GetMouseButton(0))
+            if(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))
             {
-                rb.velocity = other.transform.up * 1000 * Time.deltaTime;
+                rb.velocity = other.transform.up * 700 * Time.deltaTime;
             }
         }    
     }

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pad
   - Dash
+  - player
   layers:
   - Default
   - TransparentFX
